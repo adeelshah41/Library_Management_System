@@ -1,0 +1,63 @@
+-- Create Books table
+create database library;
+use library;
+CREATE TABLE IF NOT EXISTS Books (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Author VARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL,
+    CONSTRAINT unique_title_author UNIQUE (Title, Author)
+);
+
+-- Create Borrowers table
+CREATE TABLE IF NOT EXISTS Borrowers (
+    BorrowerID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    ContactDetails VARCHAR(255)
+);
+
+-- Create Transactions table
+CREATE TABLE IF NOT EXISTS Transactions (
+    TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+    BookID INT REFERENCES Books(BookID),
+    BorrowerID INT REFERENCES Borrowers(BorrowerID),
+    TransactionDate DATE,
+    Type ENUM('Borrow', 'Return') NOT NULL
+);
+
+-- Create Genres table
+CREATE TABLE IF NOT EXISTS Genres (
+    GenreID INT AUTO_INCREMENT PRIMARY KEY,
+    GenreName VARCHAR(50) NOT NULL
+);
+
+-- Create Publishers table
+CREATE TABLE IF NOT EXISTS Publishers (
+    PublisherID INT AUTO_INCREMENT PRIMARY KEY,
+    PublisherName VARCHAR(100) NOT NULL
+);
+
+-- Update Books table
+ALTER TABLE Books
+ADD COLUMN GenreID INT,
+ADD COLUMN PublisherID INT,
+ADD CONSTRAINT fk_genre FOREIGN KEY (GenreID) REFERENCES Genres(GenreID),
+ADD CONSTRAINT fk_publisher FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID);
+
+-- Create BookCopies table
+CREATE TABLE IF NOT EXISTS BookCopies (
+    CopyID INT AUTO_INCREMENT PRIMARY KEY,
+    BookID INT REFERENCES Books(BookID),
+    Available BOOLEAN DEFAULT TRUE,
+    UNIQUE(BookID, Available)
+);
+
+-- Insert sample genres
+INSERT INTO Genres (GenreName) VALUES ('Science Fiction');
+INSERT INTO Genres (GenreName) VALUES ('Mystery');
+INSERT INTO Genres (GenreName) VALUES ('Fantasy');
+
+-- Insert sample publishers
+INSERT INTO Publishers (PublisherName) VALUES ('Random House');
+INSERT INTO Publishers (PublisherName) VALUES ('Penguin Books');
+INSERT INTO Publishers (PublisherName) VALUES ('HarperCollins');
