@@ -1,6 +1,5 @@
--- Create Books table
 create database library;
-use library;
+
 CREATE TABLE IF NOT EXISTS Books (
     BookID INT AUTO_INCREMENT PRIMARY KEY,
     Title VARCHAR(255) NOT NULL,
@@ -56,8 +55,21 @@ CREATE TABLE IF NOT EXISTS BookCopies (
 INSERT INTO Genres (GenreName) VALUES ('Science Fiction');
 INSERT INTO Genres (GenreName) VALUES ('Mystery');
 INSERT INTO Genres (GenreName) VALUES ('Fantasy');
+INSERT INTO Genres (GenreName) VALUES ('Novel');
+INSERT INTO Genres (GenreName) VALUES ('History');
+INSERT INTO Genres (GenreName) VALUES ('Personal Finance');
+INSERT INTO Genres (GenreName) VALUES ('Psychology');
+INSERT INTO Genres (GenreName) VALUES ('Thriller');
+INSERT INTO Genres (GenreName) VALUES ('Romance');
+INSERT INTO Genres (GenreName) VALUES ('Travel');
+INSERT INTO Genres (GenreName) VALUES ('Biography');
+INSERT INTO Genres (GenreName) VALUES ('Self Help');
+INSERT INTO Genres (GenreName) VALUES ('Non Fiction');
 
 -- Insert sample publishers
 INSERT INTO Publishers (PublisherName) VALUES ('Random House');
 INSERT INTO Publishers (PublisherName) VALUES ('Penguin Books');
 INSERT INTO Publishers (PublisherName) VALUES ('HarperCollins');
+INSERT INTO Publishers (PublisherName) VALUES ('Plata Publishing');
+INSERT INTO Publishers (PublisherName) VALUES ('Viking Press');
+-- 
