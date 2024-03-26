@@ -222,7 +222,7 @@ def return_book():
                 execute_query2(query, (book_id,))
 
                 st.success("Book returned successfully!")
-                
+
 if selected_option == "Home":
     background_image = "books.jpg"
     st.image(background_image, use_column_width=True)
@@ -344,16 +344,20 @@ elif selected_option == "Borrowers List":
            WHERE Type = 'Borrow'
            GROUP BY Name;
            """
+    query2 ="""
+              SELECT Users.UserID, Borrowers.Name, books.Title AS BookName
+              FROM Borrowers
+              JOIN Users ON Borrowers.Name = Users.Username
+              JOIN books ON Borrowers.BookID = books.bookid;
+            """
 
     # Execute the query and fetch books data
-    borr = execute_query(query)
+    borr = execute_query(query2)
 
     # Check if there are books available in the database
     if borr:
         # Convert the list of dictionaries to a Pandas DataFrame
         df = pd.DataFrame(borr)
-        df.index.name='ID'
-        df.index = df.index + 1
         # Display the DataFrame as a table
         st.write(df)
     else:
@@ -377,7 +381,7 @@ elif selected_option == "Borrow Book":
             if result2:
                 st.error("This book is already borrowed by you.")
             else:
-     
+
                 # query = "INSERT INTO Borrowers (Name,BookID,Type) VALUES (%s,%s,'Borrow')"
                 query = "INSERT INTO Borrowers (Name, BookID, Type, NoOfBooks) VALUES (%s, %s, 'Borrow', 1) ON DUPLICATE KEY UPDATE NoOfBooks = NoOfBooks + 1"
                 values = (borrower_name, book_id)
