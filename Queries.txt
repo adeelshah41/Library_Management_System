@@ -50,7 +50,9 @@ CREATE TABLE IF NOT EXISTS BookCopies (
     Available BOOLEAN DEFAULT TRUE,
     UNIQUE(BookID, Available)
 );
-
+use library;
+SELECT * FROM borrowers;
+SELECT * FROM transactions;
 -- Insert sample genres
 INSERT INTO Genres (GenreName) VALUES ('Science Fiction');
 INSERT INTO Genres (GenreName) VALUES ('Mystery');
@@ -73,3 +75,28 @@ INSERT INTO Publishers (PublisherName) VALUES ('HarperCollins');
 INSERT INTO Publishers (PublisherName) VALUES ('Plata Publishing');
 INSERT INTO Publishers (PublisherName) VALUES ('Viking Press');
 -- 
+
+
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(255) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    UserType ENUM('Admin', 'Librarian', 'Student') NOT NULL
+);
+-- Inserting sample data for admin
+INSERT INTO Users (Username, Password, UserType) VALUES ('admin', 'admin', 'Admin');
+
+-- Inserting sample data for librarian
+INSERT INTO Users (Username, Password, UserType) VALUES ('librarian', 'librarian123', 'Librarian');
+
+-- Inserting sample data for student
+INSERT INTO Users (Username, Password) VALUES ('adeel', '123');
+
+ALTER Table borrowers 
+ADD COLUMN BookID INT,
+ADD COLUMN Type VARCHAR(15),
+ADD CONSTRAINT fk_BookID FOREIGN KEY (BookID) REFERENCES books(BookID);
+ALTER Table borrowers 
+ADD Column Noofbooks INT;
+-- ADD Column Quantity,
+-- ADD Column Type;
