@@ -8,7 +8,7 @@ try:
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="adeelshah2001",
+        password="password",
         database="library"
     )
     if connection.is_connected():
@@ -24,7 +24,7 @@ selected_option = st.sidebar.selectbox("Select Option",
 
 db_config = {"host": "localhost",
              "user": "root",
-             "password": "adeelshah2001",
+             "password": "password",
              "database": "library"}
 
 # Function to execute MySQL queries
@@ -78,9 +78,8 @@ def execute_query(query, values=None):
         cursor.close()
 
 
-# Function to add a new book to the database
 
-
+# Function to add a new book to the database #
 def add_book(title, author, genre_id, publisher_id):
     # Establish a connection to the database
     connection = execute_query(query, values)
@@ -145,6 +144,7 @@ def user_registration():
 
 
 def view_books():
+    ### LEFT JOIN IS USED ###
     query = """
     SELECT b.BookID, b.Title, b.Author, b.Quantity, g.GenreName, p.PublisherName
     FROM Books b
@@ -344,6 +344,7 @@ elif selected_option == "Borrowers List":
            WHERE Type = 'Borrow'
            GROUP BY Name;
            """
+    ### NORMALIZATION HERE ### INNER JOIN USED
     query2 ="""
               SELECT Users.UserID, Borrowers.Name, books.Title AS BookName
               FROM Borrowers
