@@ -8,7 +8,7 @@ try:
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="password",
+        password="adeelshah2001",
         database="library"
     )
     if connection.is_connected():
@@ -24,7 +24,7 @@ selected_option = st.sidebar.selectbox("Select Option",
 
 db_config = {"host": "localhost",
              "user": "root",
-             "password": "password",
+             "password": "adeelshah2001",
              "database": "library"}
 
 # Function to execute MySQL queries
